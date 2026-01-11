@@ -185,7 +185,7 @@ class GameState {
     startNewGame() {
         this.currentLevel = 1;
         this.score = 0;
-        this.lives = 3;
+        this.lives = 5;
         this.gameData.canContinue = true;
         this.startGame();
     }
@@ -677,17 +677,30 @@ class Player {
     }
 
     draw(ctx) {
-        // Nave del jugador
+        // Nave del jugador estilo 8-bit Space Invaders
+        const size = 3;
         ctx.fillStyle = '#00ff00';
-        ctx.beginPath();
-        ctx.moveTo(this.x + this.width / 2, this.y);
-        ctx.lineTo(this.x + this.width, this.y + this.height);
-        ctx.lineTo(this.x + this.width - 10, this.y + this.height - 10);
-        ctx.lineTo(this.x + this.width / 2, this.y + this.height - 5);
-        ctx.lineTo(this.x + 10, this.y + this.height - 10);
-        ctx.lineTo(this.x, this.y + this.height);
-        ctx.closePath();
-        ctx.fill();
+        
+        // Patrón pixel art de la nave (vista superior)
+        const pixels = [
+            [0,0,0,0,1,1,1,1,0,0,0,0],
+            [0,0,0,1,1,1,1,1,1,0,0,0],
+            [0,0,1,1,1,1,1,1,1,1,0,0],
+            [0,1,1,0,1,1,1,1,0,1,1,0],
+            [1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,1,1,1,0,0,1,1,1,0,1],
+            [1,0,1,0,0,0,0,0,0,1,0,1],
+            [0,0,1,0,0,0,0,0,0,1,0,0]
+        ];
+        
+        for (let row = 0; row < pixels.length; row++) {
+            for (let col = 0; col < pixels[row].length; col++) {
+                if (pixels[row][col] === 1) {
+                    ctx.fillRect(this.x + col * size - 18, this.y + row * size, size, size);
+                }
+            }
+        }
 
         // Escudo si está activo
         if (this.shieldActive) {
@@ -832,30 +845,69 @@ class Enemy {
     }
 
     draw(ctx) {
-        ctx.fillStyle = '#ff3333';
+        const size = 3;
         
-        // Dibujar enemigo con formas diferentes según tipo
+        // Colores según tipo de enemigo (estilo Space Invaders)
         if (this.type === 0) {
-            // Forma cuadrada
-            ctx.fillRect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = '#ff00ff'; // Magenta
+            // Alien tipo 1 (pulpo)
+            const pixels = [
+                [0,0,0,1,1,1,1,0,0,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,1,0,1,1,1,1,0,1,1],
+                [1,1,1,1,1,1,1,1,1,1],
+                [0,0,1,0,0,0,0,1,0,0],
+                [0,1,0,1,1,1,1,0,1,0],
+                [1,0,1,0,0,0,0,1,0,1]
+            ];
+            for (let row = 0; row < pixels.length; row++) {
+                for (let col = 0; col < pixels[row].length; col++) {
+                    if (pixels[row][col] === 1) {
+                        ctx.fillRect(this.x + col * size, this.y + row * size, size, size);
+                    }
+                }
+            }
         } else if (this.type === 1) {
-            // Forma de cruz
-            ctx.fillRect(this.x + 10, this.y, 10, this.height);
-            ctx.fillRect(this.x, this.y + 10, this.width, 10);
+            ctx.fillStyle = '#00ffff'; // Cyan
+            // Alien tipo 2 (cangrejo)
+            const pixels = [
+                [0,0,1,0,0,0,0,1,0,0],
+                [0,0,0,1,0,0,1,0,0,0],
+                [0,0,1,1,1,1,1,1,0,0],
+                [0,1,1,0,1,1,0,1,1,0],
+                [1,1,1,1,1,1,1,1,1,1],
+                [1,0,1,1,1,1,1,1,0,1],
+                [1,0,1,0,0,0,0,1,0,1],
+                [0,0,0,1,1,1,1,0,0,0]
+            ];
+            for (let row = 0; row < pixels.length; row++) {
+                for (let col = 0; col < pixels[row].length; col++) {
+                    if (pixels[row][col] === 1) {
+                        ctx.fillRect(this.x + col * size, this.y + row * size, size, size);
+                    }
+                }
+            }
         } else {
-            // Forma de triángulo
-            ctx.beginPath();
-            ctx.moveTo(this.x + this.width / 2, this.y);
-            ctx.lineTo(this.x + this.width, this.y + this.height);
-            ctx.lineTo(this.x, this.y + this.height);
-            ctx.closePath();
-            ctx.fill();
+            ctx.fillStyle = '#ffff00'; // Amarillo
+            // Alien tipo 3 (calamar)
+            const pixels = [
+                [0,0,0,1,1,0,0,0],
+                [0,0,1,1,1,1,0,0],
+                [0,1,1,1,1,1,1,0],
+                [1,1,0,1,1,0,1,1],
+                [1,1,1,1,1,1,1,1],
+                [0,0,1,0,0,1,0,0],
+                [0,1,0,1,1,0,1,0],
+                [1,0,1,0,0,1,0,1]
+            ];
+            for (let row = 0; row < pixels.length; row++) {
+                for (let col = 0; col < pixels[row].length; col++) {
+                    if (pixels[row][col] === 1) {
+                        ctx.fillRect(this.x + col * size + 3, this.y + row * size, size, size);
+                    }
+                }
+            }
         }
-
-        // Ojos
-        ctx.fillStyle = '#ffff00';
-        ctx.fillRect(this.x + 8, this.y + 8, 4, 4);
-        ctx.fillRect(this.x + 18, this.y + 8, 4, 4);
     }
 }
 
@@ -920,23 +972,40 @@ class Boss {
     }
 
     draw(ctx) {
-        // Cuerpo principal
+        // Boss alien gigante estilo 8-bit
+        const size = 4;
         ctx.fillStyle = '#ff0000';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-
-        // Decoración
-        ctx.fillStyle = '#ffcc00';
-        ctx.fillRect(this.x + 10, this.y + 5, 15, 15);
-        ctx.fillRect(this.x + this.width - 25, this.y + 5, 15, 15);
-
-        // Ojos
-        ctx.fillStyle = '#000000';
-        ctx.beginPath();
-        ctx.arc(this.x + 25, this.y + 20, 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(this.x + 55, this.y + 20, 5, 0, Math.PI * 2);
-        ctx.fill();
+        
+        const pixels = [
+            [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],
+            [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
+            [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
+            [0,1,1,0,0,1,1,1,1,1,1,0,0,1,1,0],
+            [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
+            [0,0,0,1,0,0,1,1,1,1,0,0,1,0,0,0],
+            [0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,0,1,1,1,0,0,0,0,0,0,1,1,1,0,1],
+            [1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,1]
+        ];
+        
+        for (let row = 0; row < pixels.length; row++) {
+            for (let col = 0; col < pixels[row].length; col++) {
+                if (pixels[row][col] === 1) {
+                    ctx.fillRect(this.x + col * size, this.y + row * size, size, size);
+                }
+            }
+        }
+        
+        // Detalles en amarillo
+        ctx.fillStyle = '#ffff00';
+        const yellowPixels = [
+            [4,3],[5,3],[6,3],[9,3],[10,3],[11,3]
+        ];
+        yellowPixels.forEach(([col, row]) => {
+            ctx.fillRect(this.x + col * size, this.y + row * size, size, size);
+        });
 
         // Barra de salud
         const healthBarWidth = 80;

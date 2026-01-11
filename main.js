@@ -83,13 +83,13 @@ class Game {
         this.canvas.width = 900; this.canvas.height = 550;
 
         this.soundManager = new SoundManager();
-        this.state = GameState.MENU; this.currentLevel = 1; this.score = 0; this.lives = 3; this.isMuted=false;
+        this.state = GameState.MENU; this.currentLevel = 1; this.score = 0; this.lives = 5; this.isMuted=false;
 
         this.player=null; this.enemies=[]; this.playerBullets=[]; this.enemyBullets=[]; this.powerUps=[]; this.particles=[]; this.boss=null;
         this.keys={}; this.mousePos={x:0,y:0};
 
         this.levelConfig={
-            1:{enemyCount:5, enemySpeed:1, fireRate:0.015, waves:1, isBoss:false},
+            1:{enemyCount:3, enemySpeed:0.5, fireRate:0.008, waves:1, isBoss:false},
             2:{enemyCount:8, enemySpeed:1.3, fireRate:0.02, waves:1, isBoss:false},
             3:{enemyCount:10, enemySpeed:1.5, fireRate:0.025, waves:2, isBoss:true},
             4:{enemyCount:12, enemySpeed:1.7, fireRate:0.03, waves:2, isBoss:false},
