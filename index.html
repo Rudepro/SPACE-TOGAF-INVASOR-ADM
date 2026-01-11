@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPACE INVADERS - TOGAF EDITION</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Pantalla de inicio -->
+        <div id="start-screen" class="screen active">
+            <div class="title-container">
+                <h1 class="game-title">SPACE INVADERS</h1>
+                <h2 class="game-subtitle">TOGAF EDITION</h2>
+            </div>
+            <div class="menu-options">
+                <button id="btn-new-game" class="menu-btn">NUEVO JUEGO</button>
+                <button id="btn-continue" class="menu-btn" disabled>CONTINUAR</button>
+                <button id="btn-select-level" class="menu-btn" disabled>SELECCIONAR NIVEL</button>
+                <button id="btn-controls" class="menu-btn">CONTROLES</button>
+                <button id="btn-highscores" class="menu-btn">PUNTUACIONES</button>
+            </div>
+            <div class="decorative-invaders">
+                <span class="invader-icon">👾</span>
+                <span class="invader-icon">👽</span>
+                <span class="invader-icon">🛸</span>
+            </div>
+        </div>
+
+        <!-- Pantalla de controles -->
+        <div id="controls-screen" class="screen">
+            <h2>CONTROLES</h2>
+            <div class="controls-list">
+                <div class="control-item">
+                    <span class="key">←  →</span>
+                    <span class="action">Mover nave</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">ESPACIO</span>
+                    <span class="action">Disparar</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">P</span>
+                    <span class="action">Pausar</span>
+                </div>
+                <div class="control-item">
+                    <span class="key">M</span>
+                    <span class="action">Silenciar</span>
+                </div>
+            </div>
+            <button id="btn-back-controls" class="menu-btn">VOLVER</button>
+        </div>
+
+        <!-- Pantalla de selección de nivel -->
+        <div id="level-select-screen" class="screen">
+            <h2>SELECCIONAR NIVEL</h2>
+            <div id="level-grid" class="level-grid">
+                <!-- Los niveles se generan dinámicamente -->
+            </div>
+            <button id="btn-back-levels" class="menu-btn">VOLVER</button>
+        </div>
+
+        <!-- Pantalla de puntuaciones -->
+        <div id="highscores-screen" class="screen">
+            <h2>MEJORES PUNTUACIONES</h2>
+            <div id="highscores-list" class="highscores-list">
+                <!-- Las puntuaciones se generan dinámicamente -->
+            </div>
+            <button id="btn-back-scores" class="menu-btn">VOLVER</button>
+        </div>
+
+        <!-- Pantalla de juego -->
+        <div id="game-screen" class="screen">
+            <div id="game-hud">
+                <div class="hud-left">
+                    <span class="hud-label">PUNTOS</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="hud-center">
+                    <span class="hud-label">NIVEL</span>
+                    <span id="level">1</span>
+                </div>
+                <div class="hud-right">
+                    <span class="hud-label">VIDAS</span>
+                    <span id="lives">❤️❤️❤️</span>
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+            <div id="power-up-indicator">
+                <span id="active-powerup"></span>
+            </div>
+        </div>
+
+        <!-- Pantalla de pausa -->
+        <div id="pause-screen" class="screen overlay">
+            <h2>PAUSADO</h2>
+            <div class="menu-options">
+                <button id="btn-resume" class="menu-btn">CONTINUAR</button>
+                <button id="btn-restart" class="menu-btn">REINICIAR NIVEL</button>
+                <button id="btn-quit" class="menu-btn">SALIR AL MENÚ</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de Game Over -->
+        <div id="gameover-screen" class="screen overlay">
+            <h2 class="gameover-title">GAME OVER</h2>
+            <div class="gameover-stats">
+                <p>Puntuación Final: <span id="final-score">0</span></p>
+                <p>Nivel Alcanzado: <span id="final-level">1</span></p>
+            </div>
+            <div class="menu-options">
+                <button id="btn-retry-level" class="menu-btn">REINTENTAR NIVEL</button>
+                <button id="btn-new-game-over" class="menu-btn">NUEVO JUEGO</button>
+                <button id="btn-menu" class="menu-btn">MENÚ PRINCIPAL</button>
+            </div>
+        </div>
+
+        <!-- Pantalla de victoria de nivel -->
+        <div id="level-complete-screen" class="screen overlay">
+            <h2 class="level-complete-title">¡NIVEL COMPLETADO!</h2>
+            <div class="level-stats">
+                <p>Puntuación: <span id="level-score">0</span></p>
+                <p>Bonus de Tiempo: <span id="time-bonus">0</span></p>
+                <p>Enemigos Eliminados: <span id="enemies-killed">0</span></p>
+            </div>
+            <button id="btn-next-level" class="menu-btn pulse">SIGUIENTE NIVEL</button>
+        </div>
+
+        <!-- Pantalla de jefe -->
+        <div id="boss-warning" class="screen overlay">
+            <h2 class="boss-warning-text">⚠️ ¡ALERTA DE JEFE! ⚠️</h2>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
